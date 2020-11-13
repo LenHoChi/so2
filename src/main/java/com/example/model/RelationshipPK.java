@@ -16,13 +16,13 @@ import java.io.Serializable;
 @Embeddable
 //@RequiredArgsConstructor
 public class RelationshipPK implements Serializable {
-//    @Email
 //    @NonNull
     @Column(name = "user_email")
+    @Email(message = "ho chi len")
     private String userEmail;
-//    @Email
 //    @NonNull
     @Column(name = "friend_email")
+    @Email(message = "ho chi len")
     private String friendEmail;
 
 

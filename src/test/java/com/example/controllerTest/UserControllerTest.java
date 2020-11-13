@@ -6,17 +6,19 @@ import com.example.controller.UserController;
 import com.example.dto.UserDTO;
 import com.example.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.catalina.security.SecurityConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -39,7 +41,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 @RunWith(SpringRunner.class)
 @WebMvcTest(UserController.class)
-//@Import(SecurityConfig.class)
+@AutoConfigureMockMvc(addFilters = false)
+//@TestPropertySource(locations="classpath:application-test.properties")
 public class UserControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -88,7 +91,7 @@ public class UserControllerTest {
 
     @Test
     public void testCreateUser() throws Exception {
-        UserDTO userDTO = new UserDTO("len1");
+        UserDTO userDTO = new UserDTO("newmooncsu@gmail.com");
 
         when(userService.saveUser(Mockito.any(UserDTO.class))).thenReturn(userDTO);
         // given(userService.saveUser(any(UserDTO.class))).willReturn(userDTO);
@@ -97,7 +100,7 @@ public class UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType("application/json"))
-                .andExpect(jsonPath("$.email", is("len1")));
+                .andExpect(jsonPath("$.email", is("newmooncsu@gmail.com")));
         verify(userService, times(1)).saveUser(userDTO);
         verifyNoMoreInteractions(userService);
     }

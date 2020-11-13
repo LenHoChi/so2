@@ -46,6 +46,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(RelationshipController.class)
+@AutoConfigureMockMvc(addFilters = false)
+
 //@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class RelationshipControllerTest {
     @Autowired
@@ -89,14 +91,14 @@ public class RelationshipControllerTest {
 //loi 404 xay ra khi co the url sai
     @Test
     public void testGetRelationship() throws Exception {
-        RelationshipPK relationshipPK = new RelationshipPK("len1", "len10");
+        RelationshipPK relationshipPK = new RelationshipPK("newmooncsu@gmail.com", "newmooncsu2@gmail.com");
         RelationshipDTO relationshipDTO = new RelationshipDTO(relationshipPK, true, false, false);
         when(relationshipService.getRelationshipById(relationshipPK)).thenReturn(Optional.of(relationshipDTO));
         mockMvc.perform(post("/api/relationship/getRelationshipbyId")
                 .content(asJsonString(relationshipPK))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.relationshipPK.userEmail", is("len1")))
+                .andExpect(jsonPath("$.relationshipPK.userEmail", is("newmooncsu@gmail.com")))
                 .andExpect(content().contentType("application/json"));
         verify(relationshipService, times(1)).getRelationshipById(relationshipPK);
         verifyNoMoreInteractions(relationshipService);

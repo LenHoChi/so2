@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -31,7 +32,8 @@ import static org.mockito.Mockito.*;
 //@RunWith(MockitoJUnitRunner.class)
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ContextConfiguration(classes = TestRepositoryConfig.class)
+//@ContextConfiguration(classes = TestRepositoryConfig.class)
+@AutoConfigureMockMvc(addFilters = false)
 public class UserServiceTest {
 //    cach 1
 //    @Mock
